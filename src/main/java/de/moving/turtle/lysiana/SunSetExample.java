@@ -21,10 +21,18 @@ public class SunSetExample {
     public SunSetExample() {
         LOGGER.info("Starting sunset example");
         // https://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400
-        Client client = ClientBuilder.newClient();
-        final WebTarget target = client.target("https://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400");
-        final Invocation.Builder requestBuilder = target.request(MediaType.APPLICATION_JSON_TYPE);
-        final SuncalcResponse response = requestBuilder.get(SuncalcResponse.class);
+        final Client client = ClientBuilder.newClient();
+
+        final WebTarget target = client
+                .target("https://api.sunrise-sunset.org")
+                .path("json")
+                .queryParam("lat", "36.7201600")
+                .queryParam("lng", "-4.4203400");
+
+        // final WebTarget target = client.target("https://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400");
+        final SuncalcResponse response = target
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .get(SuncalcResponse.class);
 
         LOGGER.info("Response: {}", response.getResults());
     }
