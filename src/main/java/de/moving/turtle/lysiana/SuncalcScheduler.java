@@ -1,6 +1,6 @@
 package de.moving.turtle.lysiana;
 
-import de.moving.turtle.lysiana.suncalc.http.SuncalcResource;
+import de.moving.turtle.lysiana.suncalc.http.ActualSuncalc;
 import de.moving.turtle.lysiana.suncalc.http.api.SuncalcResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,15 +11,15 @@ import org.springframework.stereotype.Component;
 public class SuncalcScheduler {
     private static final Logger LOGGER = LoggerFactory.getLogger(SuncalcScheduler.class);
 
-    private final SuncalcResource suncalcResource;
+    private final ActualSuncalc actualSuncalc;
 
-    public SuncalcScheduler(final SuncalcResource suncalcResource) {
-        this.suncalcResource = suncalcResource;
+    public SuncalcScheduler(final ActualSuncalc actualSuncalc) {
+        this.actualSuncalc = actualSuncalc;
     }
 
     @Scheduled(cron = "${schedule.suncalc}")
     public void schedule(){
-        final SuncalcResults suncalcResults = suncalcResource.byCordinates("36.7201600", "-4.4203400D");
+        final SuncalcResults suncalcResults = actualSuncalc.update();
         LOGGER.info("Response: {}", suncalcResults);
     }
 

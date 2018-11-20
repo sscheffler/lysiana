@@ -1,4 +1,4 @@
-package de.moving.turtle.lysiana.suncalc.http.impl;
+package de.moving.turtle.lysiana.suncalc.http;
 
 import de.moving.turtle.lysiana.suncalc.http.SuncalcResource;
 import de.moving.turtle.lysiana.suncalc.http.api.SuncalcResponse;
@@ -12,12 +12,12 @@ import javax.ws.rs.client.WebTarget;
 import static javax.ws.rs.core.MediaType.*;
 
 @Component
-public class SuncalcResourceImpl implements SuncalcResource {
+class SuncalcResourceImpl implements SuncalcResource {
 
     private static final String BASE = "https://api.sunrise-sunset.org";
     private final WebTarget target;
 
-    public SuncalcResourceImpl() {
+    SuncalcResourceImpl() {
         // https://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400
         final Client client = ClientBuilder.newClient();
 
