@@ -1,15 +1,12 @@
 package de.moving.turtle.lysiana;
 
-import de.moving.turtle.lysiana.api.suncalc.SuncalcResponse;
-import de.moving.turtle.lysiana.api.suncalc.SuncalcResults;
+import de.moving.turtle.lysiana.http.suncalc.SuncalcResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
