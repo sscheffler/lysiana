@@ -1,6 +1,8 @@
 package de.moving.turtle.lysiana;
 
-import de.moving.turtle.lysiana.http.suncalc.SuncalcResponse;
+import de.moving.turtle.lysiana.http.suncalc.SuncalcResource;
+import de.moving.turtle.lysiana.http.suncalc.api.SuncalcResponse;
+import de.moving.turtle.lysiana.http.suncalc.api.SuncalcResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -14,23 +16,15 @@ import javax.ws.rs.core.MediaType;
 public class SunSetExample {
     private static final Logger LOGGER = LoggerFactory.getLogger(SunSetExample.class);
 
+    private final SuncalcResource suncalcResource;
 
-    public SunSetExample() {
-        LOGGER.info("Starting sunset example");
-        // https://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400
-        final Client client = ClientBuilder.newClient();
 
-        final WebTarget target = client
-                .target("https://api.sunrise-sunset.org")
-                .path("json")
-                .queryParam("lat", "36.7201600")
-                .queryParam("lng", "-4.4203400");
+    public SunSetExample(SuncalcResource suncalcResource) {
+        this.suncalcResource = suncalcResource;
 
-        // final WebTarget target = client.target("https://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400");
-        final SuncalcResponse response = target
-                .request(MediaType.APPLICATION_JSON_TYPE)
-                .get(SuncalcResponse.class);
+        final SuncalcResults suncalcResults = suncalcResource.byCordinates("36.7201600", "-4.4203400D");
 
-        LOGGER.info("Response: {}", response.getResults());
+
+        LOGGER.info("Response: {}", suncalcResults);
     }
 }

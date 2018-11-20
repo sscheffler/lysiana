@@ -1,4 +1,4 @@
-package de.moving.turtle.lysiana.http.suncalc;
+package de.moving.turtle.lysiana.http.suncalc.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
