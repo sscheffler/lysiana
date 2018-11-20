@@ -2,8 +2,10 @@ package de.moving.turtle.lysiana;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
+@EnableScheduling
 public class LysianaApplication {
 
     public static void main(String[] args) {
