@@ -1,7 +1,7 @@
 package de.moving.turtle.lysiana;
 
-import de.moving.turtle.lysiana.http.suncalc.SuncalcResource;
-import de.moving.turtle.lysiana.http.suncalc.api.SuncalcResults;
+import de.moving.turtle.lysiana.suncalc.http.SuncalcResource;
+import de.moving.turtle.lysiana.suncalc.http.api.SuncalcResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;

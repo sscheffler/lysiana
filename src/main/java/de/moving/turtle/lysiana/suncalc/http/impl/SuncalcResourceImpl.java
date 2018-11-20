@@ -1,14 +1,13 @@
-package de.moving.turtle.lysiana.http.suncalc.impl;
+package de.moving.turtle.lysiana.suncalc.http.impl;
 
-import de.moving.turtle.lysiana.http.suncalc.SuncalcResource;
-import de.moving.turtle.lysiana.http.suncalc.api.SuncalcResponse;
-import de.moving.turtle.lysiana.http.suncalc.api.SuncalcResults;
+import de.moving.turtle.lysiana.suncalc.http.SuncalcResource;
+import de.moving.turtle.lysiana.suncalc.http.api.SuncalcResponse;
+import de.moving.turtle.lysiana.suncalc.http.api.SuncalcResults;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
 
 import static javax.ws.rs.core.MediaType.*;
 

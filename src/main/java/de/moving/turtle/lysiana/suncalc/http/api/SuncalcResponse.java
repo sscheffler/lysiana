@@ -1,4 +1,4 @@
-package de.moving.turtle.lysiana.http.suncalc.api;
+package de.moving.turtle.lysiana.suncalc.http.api;
 
 import lombok.*;
 
