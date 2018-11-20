@@ -13,11 +13,8 @@ public class SuncalcScheduler {
 
     private final SuncalcResource suncalcResource;
 
-
     public SuncalcScheduler(final SuncalcResource suncalcResource) {
         this.suncalcResource = suncalcResource;
-
-
     }
 
     @Scheduled(cron = "${schedule.suncalc}")
