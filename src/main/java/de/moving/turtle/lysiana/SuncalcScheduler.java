@@ -9,6 +9,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -23,13 +24,15 @@ public class SuncalcScheduler {
         this.actualSuncalc = actualSuncalc;
     }
 
-    int qos             = 2;
+    private int qos             = 2;
 
     @Value("${mqtt.broker}")
     private String broker;
     @Value("${mqtt.clientId}")
     private String clientId;
-    MemoryPersistence persistence = new MemoryPersistence();
+    private MemoryPersistence persistence = new MemoryPersistence();
+
+    @Autowired
 
     @Scheduled(cron = "${schedule.suncalc}")
     public void schedule(){
