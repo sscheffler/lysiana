@@ -34,6 +34,7 @@ class SuncalcResourceImpl implements SuncalcResource {
                 .path("json")
                 .queryParam("lat", lat)
                 .queryParam("lng", lng)
+                .queryParam("formatted", "0")
                 .request(APPLICATION_JSON_TYPE)
                 .get(SuncalcResponse.class)
                 .getResults();

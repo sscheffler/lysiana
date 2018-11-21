@@ -2,8 +2,13 @@ package de.moving.turtle.lysiana.suncalc.http.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -12,19 +17,26 @@ import lombok.*;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SuncalcResults {
 
-    private String sunrise;
-    private String sunset;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime sunrise;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime sunset;
     @JsonProperty("solar_noon")
-    private String solarNoon;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime solarNoon;
     @JsonProperty("astronomical_twilight_begin")
-    private String astronomicalTwilightBegin;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime astronomicalTwilightBegin;
     @JsonProperty("astronomical_twilight_end")
-    private String astronomicalTwilightEnd;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime astronomicalTwilightEnd;
     @JsonProperty("day_length")
-    private String dayLength;
+    private int dayLength;
     @JsonProperty("civil_twilight_begin")
-    private String civilTwilightBegin;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime civilTwilightBegin;
     @JsonProperty("civil_twilight_end")
-    private String civilTwilightEnd;
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime civilTwilightEnd;
 
 }

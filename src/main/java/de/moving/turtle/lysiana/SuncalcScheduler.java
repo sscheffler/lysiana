@@ -20,6 +20,9 @@ public class SuncalcScheduler {
     @Scheduled(cron = "${schedule.suncalc}")
     public void schedule(){
         final SuncalcResults suncalcResults = actualSuncalc.getResults();
+
+
+
         LOGGER.info("Response: {}", suncalcResults);
     }
 
