@@ -9,8 +9,8 @@ import java.util.function.BiFunction;
  * {@link ActualSuncalc#getResults()} cached by 'suncalcResultsCache'
  */
 public class ActualSuncalc {
-    private static final String LONGITUDE = "-4.4203400D";
-    private static final String LATITUDE = "36.7201600";
+    private static final String LONGITUDE = "13.737262 ";
+    private static final String LATITUDE = "51.050407";
 
     private final BiFunction<String, String, SuncalcResults> resultsBiFunction;
 
