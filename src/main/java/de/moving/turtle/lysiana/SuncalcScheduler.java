@@ -1,5 +1,7 @@
 package de.moving.turtle.lysiana;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.moving.turtle.lysiana.mqtt.MqttPublisher;
 import de.moving.turtle.lysiana.suncalc.http.ActualSuncalc;
 import de.moving.turtle.lysiana.suncalc.http.api.SuncalcResults;
@@ -10,8 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import static de.moving.turtle.lysiana.mqtt.api.LoggingTopic.LOGGING_TOPIC;
-import static java.lang.String.format;
+import static de.moving.turtle.lysiana.mqtt.api.ActivateLightProgramTopic.ACTIVATE_LIGHT_PROGRAM_TOPIC;
+import static de.moving.turtle.lysiana.mqtt.api.LedProgramMessage.ACTION.START;
+import static de.moving.turtle.lysiana.mqtt.api.LedProgramMessage.ACTION.STOP;
+import static de.moving.turtle.lysiana.mqtt.api.LedProgramMessage.LedProgramMessageBuilder;
+import static de.moving.turtle.lysiana.mqtt.api.LedProgramMessage.ledProgramBuilder;
+import static de.moving.turtle.lysiana.mqtt.api.LedPrograms.EVENING;
+import static java.time.LocalDateTime.now;
 
 @Component
 public class SuncalcScheduler {
@@ -21,22 +28,37 @@ public class SuncalcScheduler {
 
     private int qos = 2;
 
-    @Autowired
-    private MqttPublisher mqttPublisher;
+    private final MqttPublisher mqttPublisher;
 
-    public SuncalcScheduler(final ActualSuncalc actualSuncalc) {
+    @Autowired
+    public SuncalcScheduler(final ActualSuncalc actualSuncalc, MqttPublisher mqttPublisher) {
         this.actualSuncalc = actualSuncalc;
+        this.mqttPublisher = mqttPublisher;
     }
 
     @Scheduled(cron = "${schedule.suncalc}")
     public void schedule(){
-
         final SuncalcResults suncalcResults = actualSuncalc.getResults();
-        LOGGER.info("Response: {}", suncalcResults);
-        final MqttMessage message = new MqttMessage(format("Received twilight begin: '%s'", suncalcResults.getCivilTwilightBegin()).getBytes());
-        message.setQos(qos);
-        mqttPublisher.publish(LOGGING_TOPIC, message);
+        LOGGER.debug("Suncalc response: {}", suncalcResults);
+
+        final LedProgramMessageBuilder ledProgramMessageBuilder = ledProgramBuilder()
+                .program(EVENING);
+
+        if(now().isAfter(suncalcResults.getCivilTwilightBegin())) {
+            ledProgramMessageBuilder.action(START);
+        } else {
+            ledProgramMessageBuilder.action(STOP);
+        }
+
+        try {
+            final MqttMessage message = new MqttMessage(
+                    new ObjectMapper()
+                            .writeValueAsBytes(ledProgramMessageBuilder.build())
+            );
+            message.setQos(qos);
+            mqttPublisher.publish(ACTIVATE_LIGHT_PROGRAM_TOPIC, message);
+        } catch (JsonProcessingException pe) {
+            LOGGER.warn("Could not create JSON", pe);
+        }
     }
-
-
 }
